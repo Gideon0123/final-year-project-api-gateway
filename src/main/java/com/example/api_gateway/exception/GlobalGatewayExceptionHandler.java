@@ -18,8 +18,7 @@ import java.util.concurrent.TimeoutException;
 @Component
 @RequiredArgsConstructor
 @Slf4j
-public class GlobalGatewayExceptionHandler
-        implements ErrorWebExceptionHandler {
+public class GlobalGatewayExceptionHandler implements ErrorWebExceptionHandler {
 
     private final ResponseWriter responseWriter;
 
@@ -28,10 +27,7 @@ public class GlobalGatewayExceptionHandler
             ServerWebExchange exchange,
             Throwable ex
     ) {
-        log.error(
-                "Gateway Exception",
-                ex
-        );
+        log.error("Gateway Exception", ex);
 
         HttpStatus status = switch (ex) {
 

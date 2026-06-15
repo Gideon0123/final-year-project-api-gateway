@@ -13,6 +13,7 @@ public class FallbackController {
 
     @GetMapping("/auth")
     public ResponseEntity<ApiResponse<Void>> authFallback() {
+
         return ResponseEntity
                 .status(HttpStatus.SERVICE_UNAVAILABLE)
                 .body(

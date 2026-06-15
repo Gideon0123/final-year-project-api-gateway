@@ -11,8 +11,7 @@ import java.time.Duration;
 @RequiredArgsConstructor
 public class TokenBlacklistService {
 
-    private final ReactiveRedisTemplate<String,Object>
-            redisTemplate;
+    private final ReactiveRedisTemplate<String,Object> redisTemplate;
 
     public Mono<Boolean> blacklistToken(
             String token,
