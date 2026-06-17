@@ -14,7 +14,7 @@ public class GatewayRoutesConfig {
         return builder.routes()
 
                 .route("auth-service",
-                        r -> r.path("/auth/**")
+                        r -> r.path("/auth/**", "/users/**", "/admin/users/**")
                                 .uri("lb://AUTH-SERVICE"))
 
                 .route("research-service",

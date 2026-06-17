@@ -74,14 +74,5 @@ public class SecurityConfig {
                 .build();
     }
 
-//    @Bean
-//    RouteLocator customRouteLocator(RouteLocatorBuilder builder) {
-//        return builder.routes()
-//                .route("auth-service",
-//                        r -> r.path("/auth/**")
-//                                .uri("http://localhost:8081"))
-//                .build();
-//    }
-
 
 }
