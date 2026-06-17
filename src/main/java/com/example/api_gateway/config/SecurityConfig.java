@@ -4,6 +4,8 @@ import com.example.api_gateway.component.CustomAccessHandler;
 import com.example.api_gateway.component.CustomAuthenticationEntryPoint;
 import com.example.api_gateway.security.JwtAuthenticationFilter;
 import lombok.RequiredArgsConstructor;
+import org.springframework.cloud.gateway.route.RouteLocator;
+import org.springframework.cloud.gateway.route.builder.RouteLocatorBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.reactive.EnableWebFluxSecurity;
@@ -71,4 +73,15 @@ public class SecurityConfig {
                 )
                 .build();
     }
+
+//    @Bean
+//    RouteLocator customRouteLocator(RouteLocatorBuilder builder) {
+//        return builder.routes()
+//                .route("auth-service",
+//                        r -> r.path("/auth/**")
+//                                .uri("http://localhost:8081"))
+//                .build();
+//    }
+
+
 }
