@@ -4,8 +4,6 @@ import com.example.api_gateway.component.CustomAccessHandler;
 import com.example.api_gateway.component.CustomAuthenticationEntryPoint;
 import com.example.api_gateway.security.JwtAuthenticationFilter;
 import lombok.RequiredArgsConstructor;
-import org.springframework.cloud.gateway.route.RouteLocator;
-import org.springframework.cloud.gateway.route.builder.RouteLocatorBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.reactive.EnableWebFluxSecurity;

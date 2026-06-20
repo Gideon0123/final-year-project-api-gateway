@@ -30,7 +30,7 @@ public class GatewayRoutesConfig {
                                 .uri("lb://PLAGIARISM-SERVICE"))
 
                 .route("notification-service",
-                        r -> r.path("/notification/**")
+                        r -> r.path("/notification/**", "/test/email")
                                 .uri("lb://NOTIFICATION-SERVICE"))
 
                 .build();
