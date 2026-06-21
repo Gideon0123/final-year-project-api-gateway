@@ -35,6 +35,7 @@ public class JwtAuthenticationFilter implements WebFilter {
             "/auth/forgot-password",
             "/auth/reset-password",
             "/auth/refresh-token",
+            "/auth/resend-verification",
 
             "/actuator",
             "/actuator/health",
