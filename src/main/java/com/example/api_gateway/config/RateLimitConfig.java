@@ -26,14 +26,12 @@ public class RateLimitConfig {
 
             InetSocketAddress remoteAddress = request.getRemoteAddress();
 
-            String ip = remoteAddress != null
-                    ? remoteAddress.getAddress().getHostAddress()
-                    : "unknown";
+            if (remoteAddress != null && remoteAddress.getAddress() != null) {
+                return Mono.just(remoteAddress.getAddress().getHostAddress());
+            }
 
-            return Mono.just(ip);
-
+            return Mono.just("unknown-ip");
         };
-
     }
 
 }
