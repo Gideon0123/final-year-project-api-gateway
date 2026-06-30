@@ -5,15 +5,10 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.webflux.error.ErrorWebExceptionHandler;
 import org.springframework.http.HttpStatus;
-import org.springframework.security.access.AccessDeniedException;
-import org.springframework.security.core.AuthenticationException;
 import org.springframework.stereotype.Component;
 import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
-
-import java.net.ConnectException;
-import java.util.concurrent.TimeoutException;
 
 @Component
 @RequiredArgsConstructor
@@ -44,6 +39,8 @@ public class GlobalGatewayExceptionHandler implements ErrorWebExceptionHandler {
 
             case IllegalArgumentException ignored -> HttpStatus.BAD_REQUEST;
 
+//            case WebClientResponseException.TooManyRequests ignored -> HttpStatus.TOO_MANY_REQUESTS;
+
             default -> HttpStatus.INTERNAL_SERVER_ERROR;
         };
 
@@ -58,6 +55,8 @@ public class GlobalGatewayExceptionHandler implements ErrorWebExceptionHandler {
             case GATEWAY_TIMEOUT -> "Request timed out";
 
             case BAD_REQUEST -> "Invalid request";
+
+            case TOO_MANY_REQUESTS -> "Rate limit exceeded. Please try again later.";
 
             default -> "Unexpected gateway error";
         };
