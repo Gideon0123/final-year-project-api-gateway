@@ -65,7 +65,12 @@ public class GatewayRoutesConfig {
 
                                         .requestRateLimiter(config -> {
                                             config.setKeyResolver(userKeyResolver);
-                                            config.setRateLimiter(searchRateLimiter);
+                                            config.setRateLimiter(
+                                                    new RedisRateLimiter(
+                                                            20,
+                                                            40
+                                                    )
+                                            );
                                         })
 
                                         .retry(retry -> retry
@@ -91,10 +96,14 @@ public class GatewayRoutesConfig {
                                         .circuitBreaker(c -> c
                                                 .setName("researchCircuitBreaker")
                                                 .setFallbackUri("forward:/fallback/research"))
-
                                         .requestRateLimiter(config -> {
                                             config.setKeyResolver(userKeyResolver);
-                                            config.setRateLimiter(uploadRateLimiter);
+                                            config.setRateLimiter(
+                                                    new RedisRateLimiter(
+                                                            2,
+                                                            5
+                                                    )
+                                            );
                                         })
                                 )
                                 .uri("lb://RESEARCH-SERVICE"))
@@ -113,10 +122,14 @@ public class GatewayRoutesConfig {
                                         .circuitBreaker(c -> c
                                                 .setName("researchCircuitBreaker")
                                                 .setFallbackUri("forward:/fallback/research"))
-
                                         .requestRateLimiter(config -> {
                                             config.setKeyResolver(userKeyResolver);
-                                            config.setRateLimiter(downloadRateLimiter);
+                                            config.setRateLimiter(
+                                                    new RedisRateLimiter(
+                                                            5,
+                                                            10
+                                                    )
+                                            );
                                         })
 
                                         .retry(retry -> retry
@@ -147,10 +160,14 @@ public class GatewayRoutesConfig {
                                         .circuitBreaker(c -> c
                                                 .setName("researchCircuitBreaker")
                                                 .setFallbackUri("forward:/fallback/research"))
-
                                         .requestRateLimiter(config -> {
                                             config.setKeyResolver(userKeyResolver);
-                                            config.setRateLimiter(paperRateLimiter);
+                                            config.setRateLimiter(
+                                                    new RedisRateLimiter(
+                                                            5,
+                                                            10
+                                                    )
+                                            );
                                         })
                                 )
                                 .uri("lb://RESEARCH-SERVICE"))
@@ -177,10 +194,14 @@ public class GatewayRoutesConfig {
                                         .circuitBreaker(c -> c
                                                 .setName("researchCircuitBreaker")
                                                 .setFallbackUri("forward:/fallback/research"))
-
                                         .requestRateLimiter(config -> {
                                             config.setKeyResolver(userKeyResolver);
-                                            config.setRateLimiter(categoryRateLimiter);
+                                            config.setRateLimiter(
+                                                    new RedisRateLimiter(
+                                                            2,
+                                                            5
+                                                    )
+                                            );
                                         })
                                 )
                                 .uri("lb://RESEARCH-SERVICE"))
