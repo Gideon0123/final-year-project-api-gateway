@@ -17,22 +17,14 @@ public class GatewayRoutesConfig {
 
     private final KeyResolver userKeyResolver;
 
-    private final RedisRateLimiter searchRateLimiter;
-    private final RedisRateLimiter uploadRateLimiter;
-    private final RedisRateLimiter downloadRateLimiter;
-    private final RedisRateLimiter paperRateLimiter;
-    private final RedisRateLimiter categoryRateLimiter;
-
     @Bean
     public RouteLocator routeLocator(RouteLocatorBuilder builder) {
 
         return builder.routes()
 
-                /*
-                 * ==========================================================
-                 * AUTH SERVICE
-                 * ==========================================================
-                 */
+//                 ==========================================================
+//                 AUTH SERVICE
+//                 ==========================================================
                 .route("auth-service",
                         r -> r.path(
                                         "/auth/**",
@@ -50,38 +42,35 @@ public class GatewayRoutesConfig {
                  * RESEARCH SEARCH
                  * ==========================================================
                  */
-                .route("research-search",
-                        r -> r.path(
-                                        "/research/papers/search",
-                                        "/research/categories/search"
-                                )
-                                .and()
-                                .method(HttpMethod.GET)
-                                .filters(f -> f
-
-                                        .circuitBreaker(c -> c
-                                                .setName("researchCircuitBreaker")
-                                                .setFallbackUri("forward:/fallback/research"))
-
-                                        .requestRateLimiter(config -> {
-                                            config.setKeyResolver(userKeyResolver);
-                                            config.setRateLimiter(
-                                                    new RedisRateLimiter(
-                                                            20,
-                                                            40
-                                                    )
-                                            );
-                                        })
-
-                                        .retry(retry -> retry
-                                                .setRetries(3)
-                                                .setMethods(HttpMethod.GET)
-                                                .setStatuses(HttpStatus.BAD_GATEWAY,
-                                                        HttpStatus.GATEWAY_TIMEOUT,
-                                                        HttpStatus.SERVICE_UNAVAILABLE))
-                                )
-                                .uri("lb://RESEARCH-SERVICE"))
-
+//                .route("research-search",
+//                        r -> r.path(
+//                                        "/research/papers/search",
+//                                        "/research/categories/search"
+//                                )
+//                                .and()
+//                                .method(HttpMethod.GET)
+//                                .filters(f -> f
+//                                        .circuitBreaker(c -> c
+//                                                .setName("researchCircuitBreaker")
+//                                                .setFallbackUri("forward:/fallback/research"))
+////                                        .requestRateLimiter(config -> {
+////                                            config.setKeyResolver(userKeyResolver);
+////                                            config.setRateLimiter(
+////                                                    new RedisRateLimiter(
+////                                                            20,
+////                                                            40
+////                                                    )
+////                                            );
+////                                        })
+//                                        .retry(retry -> retry
+//                                                .setRetries(3)
+//                                                .setMethods(HttpMethod.GET)
+//                                                .setStatuses(HttpStatus.BAD_GATEWAY,
+//                                                        HttpStatus.GATEWAY_TIMEOUT,
+//                                                        HttpStatus.SERVICE_UNAVAILABLE))
+//                                )
+//                                .uri("lb://RESEARCH-SERVICE"))
+//
                 /*
                  * ==========================================================
                  * PAPER UPLOAD
@@ -92,7 +81,6 @@ public class GatewayRoutesConfig {
                                 .and()
                                 .method(HttpMethod.POST)
                                 .filters(f -> f
-
                                         .circuitBreaker(c -> c
                                                 .setName("researchCircuitBreaker")
                                                 .setFallbackUri("forward:/fallback/research"))
@@ -137,74 +125,74 @@ public class GatewayRoutesConfig {
                                                 .setMethods(HttpMethod.GET))
                                 )
                                 .uri("lb://RESEARCH-SERVICE"))
-
-                /*
-                 * ==========================================================
-                 * PAPER MANAGEMENT
-                 * ==========================================================
-                 */
-                .route("research-paper-management",
-                        r -> r.path(
-                                        "/research/papers",
-                                        "/research/papers/**"
-                                )
-                                .and()
-                                .method(
-                                        HttpMethod.POST,
-                                        HttpMethod.PUT,
-                                        HttpMethod.PATCH,
-                                        HttpMethod.DELETE
-                                )
-                                .filters(f -> f
-
-                                        .circuitBreaker(c -> c
-                                                .setName("researchCircuitBreaker")
-                                                .setFallbackUri("forward:/fallback/research"))
-                                        .requestRateLimiter(config -> {
-                                            config.setKeyResolver(userKeyResolver);
-                                            config.setRateLimiter(
-                                                    new RedisRateLimiter(
-                                                            5,
-                                                            10
-                                                    )
-                                            );
-                                        })
-                                )
-                                .uri("lb://RESEARCH-SERVICE"))
-
-                /*
-                 * ==========================================================
-                 * CATEGORY MANAGEMENT
-                 * ==========================================================
-                 */
-                .route("research-category-management",
-                        r -> r.path(
-                                        "/research/categories",
-                                        "/research/categories/**"
-                                )
-                                .and()
-                                .method(
-                                        HttpMethod.POST,
-                                        HttpMethod.PUT,
-                                        HttpMethod.PATCH,
-                                        HttpMethod.DELETE
-                                )
-                                .filters(f -> f
-
-                                        .circuitBreaker(c -> c
-                                                .setName("researchCircuitBreaker")
-                                                .setFallbackUri("forward:/fallback/research"))
-                                        .requestRateLimiter(config -> {
-                                            config.setKeyResolver(userKeyResolver);
-                                            config.setRateLimiter(
-                                                    new RedisRateLimiter(
-                                                            2,
-                                                            5
-                                                    )
-                                            );
-                                        })
-                                )
-                                .uri("lb://RESEARCH-SERVICE"))
+//
+//                /*
+//                 * ==========================================================
+//                 * PAPER MANAGEMENT
+//                 * ==========================================================
+//                 */
+//                .route("research-paper-management",
+//                        r -> r.path(
+//                                        "/research/papers",
+//                                        "/research/papers/**"
+//                                )
+//                                .and()
+//                                .method(
+//                                        HttpMethod.POST,
+//                                        HttpMethod.PUT,
+//                                        HttpMethod.PATCH,
+//                                        HttpMethod.DELETE
+//                                )
+//                                .filters(f -> f
+//
+//                                        .circuitBreaker(c -> c
+//                                                .setName("researchCircuitBreaker")
+//                                                .setFallbackUri("forward:/fallback/research"))
+//                                        .requestRateLimiter(config -> {
+//                                            config.setKeyResolver(userKeyResolver);
+//                                            config.setRateLimiter(
+//                                                    new RedisRateLimiter(
+//                                                            5,
+//                                                            10
+//                                                    )
+//                                            );
+//                                        })
+//                                )
+//                                .uri("lb://RESEARCH-SERVICE"))
+//
+//                /*
+//                 * ==========================================================
+//                 * CATEGORY MANAGEMENT
+//                 * ==========================================================
+//                 */
+//                .route("research-category-management",
+//                        r -> r.path(
+//                                        "/research/categories",
+//                                        "/research/categories/**"
+//                                )
+//                                .and()
+//                                .method(
+//                                        HttpMethod.POST,
+//                                        HttpMethod.PUT,
+//                                        HttpMethod.PATCH,
+//                                        HttpMethod.DELETE
+//                                )
+//                                .filters(f -> f
+//
+//                                        .circuitBreaker(c -> c
+//                                                .setName("researchCircuitBreaker")
+//                                                .setFallbackUri("forward:/fallback/research"))
+//                                        .requestRateLimiter(config -> {
+//                                            config.setKeyResolver(userKeyResolver);
+//                                            config.setRateLimiter(
+//                                                    new RedisRateLimiter(
+//                                                            2,
+//                                                            5
+//                                                    )
+//                                            );
+//                                        })
+//                                )
+//                                .uri("lb://RESEARCH-SERVICE"))
 
                 /*
                  * ==========================================================
@@ -214,14 +202,18 @@ public class GatewayRoutesConfig {
                 .route("research-service",
                         r -> r.path("/research/**")
                                 .filters(f -> f
-
                                         .circuitBreaker(c -> c
                                                 .setName("researchCircuitBreaker")
                                                 .setFallbackUri("forward:/fallback/research"))
 
                                         .retry(retry -> retry
                                                 .setRetries(3)
-                                                .setMethods(HttpMethod.GET)
+                                                .setMethods(HttpMethod.GET,
+                                                        HttpMethod.POST,
+                                                        HttpMethod.PUT,
+                                                        HttpMethod.PATCH,
+                                                        HttpMethod.DELETE
+                                                )
                                                 .setStatuses(
                                                         HttpStatus.BAD_GATEWAY,
                                                         HttpStatus.GATEWAY_TIMEOUT,
@@ -270,8 +262,6 @@ public class GatewayRoutesConfig {
                                                 .setName("notificationCircuitBreaker")
                                                 .setFallbackUri("forward:/fallback/notification")))
                                 .uri("lb://NOTIFICATION-SERVICE"))
-
                 .build();
     }
-
 }

@@ -18,7 +18,7 @@ public class RateLimitConfig {
 
             ServerHttpRequest request = exchange.getRequest();
 
-            String userId = request.getHeaders().getFirst("X-User-Id");
+            String userId = request.getHeaders().getFirst("X-USER-ID");
 
             if (userId != null && !userId.isBlank()) {
                 return Mono.just(userId);
