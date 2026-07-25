@@ -80,20 +80,20 @@ public class GatewayRoutesConfig {
                         r -> r.path("/research/papers/*/upload")
                                 .and()
                                 .method(HttpMethod.POST)
-                                .filters(f -> f
-                                        .circuitBreaker(c -> c
-                                                .setName("researchCircuitBreaker")
-                                                .setFallbackUri("forward:/fallback/research"))
-                                        .requestRateLimiter(config -> {
-                                            config.setKeyResolver(userKeyResolver);
-                                            config.setRateLimiter(
-                                                    new RedisRateLimiter(
-                                                            2,
-                                                            5
-                                                    )
-                                            );
-                                        })
-                                )
+//                                .filters(f -> f
+//                                        .circuitBreaker(c -> c
+//                                                .setName("researchCircuitBreaker")
+//                                                .setFallbackUri("forward:/fallback/research"))
+//                                        .requestRateLimiter(config -> {
+//                                            config.setKeyResolver(userKeyResolver);
+//                                            config.setRateLimiter(
+//                                                    new RedisRateLimiter(
+//                                                            2,
+//                                                            5
+//                                                    )
+//                                            );
+//                                        })
+//                                )
                                 .uri("lb://RESEARCH-SERVICE"))
 
                 /*
@@ -105,25 +105,24 @@ public class GatewayRoutesConfig {
                         r -> r.path("/research/papers/*/download")
                                 .and()
                                 .method(HttpMethod.GET)
-                                .filters(f -> f
-
-                                        .circuitBreaker(c -> c
-                                                .setName("researchCircuitBreaker")
-                                                .setFallbackUri("forward:/fallback/research"))
-                                        .requestRateLimiter(config -> {
-                                            config.setKeyResolver(userKeyResolver);
-                                            config.setRateLimiter(
-                                                    new RedisRateLimiter(
-                                                            5,
-                                                            10
-                                                    )
-                                            );
-                                        })
-
-                                        .retry(retry -> retry
-                                                .setRetries(3)
-                                                .setMethods(HttpMethod.GET))
-                                )
+//                                .filters(f -> f
+//                                        .circuitBreaker(c -> c
+//                                                .setName("researchCircuitBreaker")
+//                                                .setFallbackUri("forward:/fallback/research"))
+//                                        .requestRateLimiter(config -> {
+//                                            config.setKeyResolver(userKeyResolver);
+//                                            config.setRateLimiter(
+//                                                    new RedisRateLimiter(
+//                                                            5,
+//                                                            10
+//                                                    )
+//                                            );
+//                                        })
+//
+//                                        .retry(retry -> retry
+//                                                .setRetries(3)
+//                                                .setMethods(HttpMethod.GET))
+//                                )
                                 .uri("lb://RESEARCH-SERVICE"))
 //
 //                /*
