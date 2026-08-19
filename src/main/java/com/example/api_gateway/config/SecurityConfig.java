@@ -46,7 +46,10 @@ public class SecurityConfig {
                         )
                         .hasAnyRole(
                                 "ADMIN",
-                                "REVIEWER"
+                                "RESEARCHER",
+                                "STUDENT",
+                                "REVIEWER",
+                                "LECTURER"
                         )
 
                         // RESEARCHERS
@@ -55,7 +58,10 @@ public class SecurityConfig {
                         )
                         .hasAnyRole(
                                 "ADMIN",
-                                "RESEARCHER"
+                                "RESEARCHER",
+                                "STUDENT",
+                                "REVIEWER",
+                                "LECTURER"
                         )
 
                         .anyExchange()

@@ -20,7 +20,6 @@ public class CorrelationIdFilter implements WebFilter {
             ServerWebExchange exchange,
             WebFilterChain chain
     ) {
-
         String correlationId = Optional.ofNullable(
                 exchange.getRequest()
                         .getHeaders()
@@ -29,7 +28,6 @@ public class CorrelationIdFilter implements WebFilter {
         ).orElse(
                 UUID.randomUUID().toString()
         );
-
 
         ServerHttpRequest request = exchange.getRequest()
                 .mutate()

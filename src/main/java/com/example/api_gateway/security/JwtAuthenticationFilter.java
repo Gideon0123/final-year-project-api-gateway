@@ -36,6 +36,7 @@ public class JwtAuthenticationFilter implements WebFilter {
             "/auth/reset-password",
             "/auth/refresh-token",
             "/auth/resend-verification",
+            "/research/**",
 
             "/actuator",
             "/actuator/health",
@@ -99,7 +100,6 @@ public class JwtAuthenticationFilter implements WebFilter {
                     .header(GatewayHeaders.USER_ID, String.valueOf(userId))
                     .header(GatewayHeaders.USER_EMAIL, username)
                     .header(GatewayHeaders.USER_ROLE, role)
-
                     .build();
 
             ServerWebExchange modifiedExchange = exchange.mutate()
@@ -161,8 +161,7 @@ public class JwtAuthenticationFilter implements WebFilter {
             ServerWebExchange exchange,
             String message
     ) {
-        exchange.getResponse()
-                .setStatusCode(HttpStatus.UNAUTHORIZED);
+        exchange.getResponse().setStatusCode(HttpStatus.UNAUTHORIZED);
 
         exchange.getResponse()
                 .getHeaders()
