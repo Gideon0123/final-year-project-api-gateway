@@ -64,6 +64,18 @@ public class SecurityConfig {
                                 "LECTURER"
                         )
 
+                        // PLAGIARISM
+                        .pathMatchers(
+                                "/plagiarism/**"
+                        )
+                        .hasAnyRole(
+                                "ADMIN",
+                                "RESEARCHER",
+                                "STUDENT",
+                                "REVIEWER",
+                                "LECTURER"
+                        )
+
                         .anyExchange()
                         .authenticated()
                 )
