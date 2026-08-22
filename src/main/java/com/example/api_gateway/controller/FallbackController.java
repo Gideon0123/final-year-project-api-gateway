@@ -75,4 +75,17 @@ public class FallbackController {
                         )
                 );
     }
+
+    @GetMapping("/collaboration")
+    public ResponseEntity<ApiResponse<Void>> collaborationFallback() {
+
+        return ResponseEntity
+                .status(HttpStatus.SERVICE_UNAVAILABLE)
+                .body(
+                        ApiResponse.failure(
+                                "collaboration service is temporarily unavailable",
+                                HttpStatus.SERVICE_UNAVAILABLE.value()
+                        )
+                );
+    }
 }

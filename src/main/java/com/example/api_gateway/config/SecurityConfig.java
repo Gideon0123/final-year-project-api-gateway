@@ -76,6 +76,19 @@ public class SecurityConfig {
                                 "LECTURER"
                         )
 
+                        // COLLABORATION
+                        .pathMatchers(
+                                "/collaboration/**"
+                        )
+                        .hasAnyRole(
+                                "ADMIN",
+                                "RESEARCHER",
+                                "STUDENT",
+                                "REVIEWER",
+                                "LECTURER"
+                        )
+
+
                         .anyExchange()
                         .authenticated()
                 )

@@ -261,6 +261,20 @@ public class GatewayRoutesConfig {
                                                 .setName("notificationCircuitBreaker")
                                                 .setFallbackUri("forward:/fallback/notification")))
                                 .uri("lb://NOTIFICATION-SERVICE"))
+
+                /*
+                 * ==========================================================
+                 * COLLABORATION
+                 * ==========================================================
+                 */
+                .route("collaboration-service",
+                        r -> r.path("/collaboration/**")
+                                .filters(f -> f
+                                        .circuitBreaker(c -> c
+                                                .setName("collaborationCircuitBreaker")
+                                                .setFallbackUri("forward:/fallback/collaboration")))
+                                .uri("lb://COLLABORATION-SERVICE"))
+
                 .build();
     }
 }
