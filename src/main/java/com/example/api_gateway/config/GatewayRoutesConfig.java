@@ -275,6 +275,10 @@ public class GatewayRoutesConfig {
                                                 .setFallbackUri("forward:/fallback/collaboration")))
                                 .uri("lb://COLLABORATION-SERVICE"))
 
+                .route("collaboration-websocket",
+                        r -> r.path("/collaboration/ws")
+                                .uri("lb:ws://COLLABORATION-SERVICE"))
+
                 .build();
     }
 }

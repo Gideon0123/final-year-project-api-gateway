@@ -88,7 +88,6 @@ public class SecurityConfig {
                                 "LECTURER"
                         )
 
-
                         .anyExchange()
                         .authenticated()
                 )
