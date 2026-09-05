@@ -264,20 +264,30 @@ public class GatewayRoutesConfig {
 
                 /*
                  * ==========================================================
-                 * COLLABORATION
+                 * COLLABORATION WEBSOCKET
+                 * ==========================================================
+                 */
+                .route("collaboration-websocket",
+                        r -> r.path("/collaboration/ws")
+                                .filters(f -> f
+                                        .stripPrefix(1))
+                                .uri("lb:ws://COLLABORATION-SERVICE"))
+
+                /*
+                 * ==========================================================
+                 * COLLABORATION HTTP
                  * ==========================================================
                  */
                 .route("collaboration-service",
-                        r -> r.path("/collaboration/**")
+                        r -> r.path("/collaboration/ws")
                                 .filters(f -> f
                                         .circuitBreaker(c -> c
                                                 .setName("collaborationCircuitBreaker")
-                                                .setFallbackUri("forward:/fallback/collaboration")))
+                                                .setFallbackUri(
+                                                        "forward:/fallback/collaboration"
+                                                )))
                                 .uri("lb://COLLABORATION-SERVICE"))
 
-                .route("collaboration-websocket",
-                        r -> r.path("/collaboration/ws")
-                                .uri("lb:ws://COLLABORATION-SERVICE"))
 
                 .build();
     }
