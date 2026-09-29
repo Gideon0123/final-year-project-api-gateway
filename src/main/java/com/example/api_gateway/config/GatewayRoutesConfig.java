@@ -16,6 +16,7 @@ import org.springframework.http.HttpStatus;
 public class GatewayRoutesConfig {
 
     private final KeyResolver userKeyResolver;
+    private final RedisRateLimiter redisRateLimiter;
 
     @Bean
     public RouteLocator routeLocator(RouteLocatorBuilder builder) {
@@ -201,13 +202,17 @@ public class GatewayRoutesConfig {
                 .route("research-service",
                         r -> r.path("/research/**")
                                 .filters(f -> f
+                                        .requestRateLimiter(config -> {
+                                            config.setKeyResolver(userKeyResolver);
+                                            config.setRateLimiter(redisRateLimiter);
+                                        })
                                         .circuitBreaker(c -> c
                                                 .setName("researchCircuitBreaker")
                                                 .setFallbackUri("forward:/fallback/research"))
-
                                         .retry(retry -> retry
                                                 .setRetries(3)
-                                                .setMethods(HttpMethod.GET,
+                                                .setMethods(
+                                                        HttpMethod.GET,
                                                         HttpMethod.POST,
                                                         HttpMethod.PUT,
                                                         HttpMethod.PATCH,
@@ -216,8 +221,8 @@ public class GatewayRoutesConfig {
                                                 .setStatuses(
                                                         HttpStatus.BAD_GATEWAY,
                                                         HttpStatus.GATEWAY_TIMEOUT,
-                                                        HttpStatus.SERVICE_UNAVAILABLE))
-                                )
+                                                        HttpStatus.SERVICE_UNAVAILABLE
+                                                )))
                                 .uri("lb://RESEARCH-SERVICE"))
 
                 /*
@@ -228,6 +233,10 @@ public class GatewayRoutesConfig {
                 .route("review-service",
                         r -> r.path("/review/**")
                                 .filters(f -> f
+                                        .requestRateLimiter(config -> {
+                                            config.setKeyResolver(userKeyResolver);
+                                            config.setRateLimiter(redisRateLimiter);
+                                        })
                                         .circuitBreaker(c -> c
                                                 .setName("reviewCircuitBreaker")
                                                 .setFallbackUri("forward:/fallback/review")))
@@ -241,6 +250,10 @@ public class GatewayRoutesConfig {
                 .route("plagiarism-service",
                         r -> r.path("/plagiarism/**")
                                 .filters(f -> f
+                                        .requestRateLimiter(config -> {
+                                            config.setKeyResolver(userKeyResolver);
+                                            config.setRateLimiter(redisRateLimiter);
+                                        })
                                         .circuitBreaker(c -> c
                                                 .setName("plagiarismCircuitBreaker")
                                                 .setFallbackUri("forward:/fallback/plagiarism")))
@@ -257,6 +270,10 @@ public class GatewayRoutesConfig {
                                         "/test/email"
                                 )
                                 .filters(f -> f
+                                        .requestRateLimiter(config -> {
+                                            config.setKeyResolver(userKeyResolver);
+                                            config.setRateLimiter(redisRateLimiter);
+                                        })
                                         .circuitBreaker(c -> c
                                                 .setName("notificationCircuitBreaker")
                                                 .setFallbackUri("forward:/fallback/notification")))
@@ -270,6 +287,10 @@ public class GatewayRoutesConfig {
                 .route("collaboration-websocket",
                         r -> r.path("/collaboration/ws")
                                 .filters(f -> f
+                                        .requestRateLimiter(config -> {
+                                            config.setKeyResolver(userKeyResolver);
+                                            config.setRateLimiter(redisRateLimiter);
+                                        })
                                         .stripPrefix(1))
                                 .uri("lb:ws://COLLABORATION-SERVICE"))
 
@@ -279,8 +300,12 @@ public class GatewayRoutesConfig {
                  * ==========================================================
                  */
                 .route("collaboration-service",
-                        r -> r.path("/collaboration/ws")
+                        r -> r.path("/collaboration/**")
                                 .filters(f -> f
+                                        .requestRateLimiter(config -> {
+                                            config.setKeyResolver(userKeyResolver);
+                                            config.setRateLimiter(redisRateLimiter);
+                                        })
                                         .circuitBreaker(c -> c
                                                 .setName("collaborationCircuitBreaker")
                                                 .setFallbackUri(

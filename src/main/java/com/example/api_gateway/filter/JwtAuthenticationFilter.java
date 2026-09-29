@@ -1,5 +1,6 @@
-package com.example.api_gateway.security;
+package com.example.api_gateway.filter;
 
+import com.example.api_gateway.security.JwtService;
 import com.example.api_gateway.util.GatewayHeaders;
 import com.example.api_gateway.util.ResponseWriter;
 import lombok.RequiredArgsConstructor;

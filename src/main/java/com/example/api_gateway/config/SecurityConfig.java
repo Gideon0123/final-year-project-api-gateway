@@ -2,7 +2,7 @@ package com.example.api_gateway.config;
 
 import com.example.api_gateway.component.CustomAccessHandler;
 import com.example.api_gateway.component.CustomAuthenticationEntryPoint;
-import com.example.api_gateway.security.JwtAuthenticationFilter;
+import com.example.api_gateway.filter.JwtAuthenticationFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
