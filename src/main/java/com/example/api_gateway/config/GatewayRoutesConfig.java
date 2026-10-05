@@ -281,18 +281,12 @@ public class GatewayRoutesConfig {
 
                 /*
                  * ==========================================================
-                 * COLLABORATION WEBSOCKET
+                 * CONVERSATION WEBSOCKET
                  * ==========================================================
                  */
-                .route("collaboration-websocket",
-                        r -> r.path("/collaboration/ws")
-                                .filters(f -> f
-                                        .requestRateLimiter(config -> {
-                                            config.setKeyResolver(userKeyResolver);
-                                            config.setRateLimiter(redisRateLimiter);
-                                        })
-                                        .stripPrefix(1))
-                                .uri("lb:ws://COLLABORATION-SERVICE"))
+                .route("conversation-service",
+                        r -> r.path("/conversation/ws")
+                                .uri("lb:ws://CONVERSATION-SERVICE"))
 
                 /*
                  * ==========================================================

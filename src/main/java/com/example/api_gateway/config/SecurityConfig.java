@@ -88,6 +88,18 @@ public class SecurityConfig {
                                 "LECTURER"
                         )
 
+                        .pathMatchers(
+                                "/conversation/**",
+                                "/conversation/ws/**"
+                        )
+                        .hasAnyRole(
+                                "ADMIN",
+                                "RESEARCHER",
+                                "STUDENT",
+                                "REVIEWER",
+                                "LECTURER"
+                        )
+
                         .anyExchange()
                         .authenticated()
                 )
