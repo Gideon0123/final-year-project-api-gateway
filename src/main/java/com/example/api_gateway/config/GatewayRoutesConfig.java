@@ -290,6 +290,25 @@ public class GatewayRoutesConfig {
 
                 /*
                  * ==========================================================
+                 * CONVERSATION HTTP
+                 * ==========================================================
+                 */
+                .route("conversation-service",
+                        r -> r.path("/conversations/**", "/conversations")
+                                .filters(f -> f
+                                        .requestRateLimiter(config -> {
+                                            config.setKeyResolver(userKeyResolver);
+                                            config.setRateLimiter(redisRateLimiter);
+                                        })
+                                        .circuitBreaker(c -> c
+                                                .setName("conversationCircuitBreaker")
+                                                .setFallbackUri(
+                                                        "forward:/fallback/conversation"
+                                                )))
+                                .uri("lb://CONVERSATION-SERVICE"))
+
+                /*
+                 * ==========================================================
                  * COLLABORATION HTTP
                  * ==========================================================
                  */

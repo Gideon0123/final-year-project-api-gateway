@@ -88,4 +88,17 @@ public class FallbackController {
                         )
                 );
     }
+
+    @GetMapping("/conversation")
+    public ResponseEntity<ApiResponse<Void>> conversationFallback() {
+
+        return ResponseEntity
+                .status(HttpStatus.SERVICE_UNAVAILABLE)
+                .body(
+                        ApiResponse.failure(
+                                "conversation service is temporarily unavailable",
+                                HttpStatus.SERVICE_UNAVAILABLE.value()
+                        )
+                );
+    }
 }

@@ -31,6 +31,7 @@ public class SecurityConfig {
                         .pathMatchers(
                                 "/auth/**",
                                 "/actuator/**"
+//                                "/internal/collaboration/connections/check"
                         )
                         .permitAll()
 
@@ -79,6 +80,7 @@ public class SecurityConfig {
                         // COLLABORATION
                         .pathMatchers(
                                 "/collaboration/**"
+//                                "/internal/collaboration/connections/check"
                         )
                         .hasAnyRole(
                                 "ADMIN",
