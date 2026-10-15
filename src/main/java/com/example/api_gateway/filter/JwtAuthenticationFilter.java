@@ -38,7 +38,6 @@ public class JwtAuthenticationFilter implements WebFilter {
             "/auth/refresh-token",
             "/auth/resend-verification",
             "/research/**",
-
             "/actuator",
             "/actuator/health",
             "/actuator/info"
